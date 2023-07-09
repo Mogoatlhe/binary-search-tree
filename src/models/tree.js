@@ -17,15 +17,44 @@ const Tree = (array) => {
     return node;
   }
 
-  const prettyPrint = (node = root, prefix = "", isLeft = true) => {
-    if (node === null) {
+  const insert = (value) => {
+    const node = _getNewNode(value);
+    if (root === null) {
+      root = node;
       return;
     }
-    if (node.right !== null) {
+
+    let curr = root;
+
+    while (curr !== null && curr !== undefined) {
+      if (curr.getData() === value) return;
+      if (curr.getData() > value) {
+        if (curr.left === null || curr.left === undefined) {
+          curr.left = node;
+          return;
+        }
+
+        curr = curr.left;
+      } else {
+        if (curr.right === null || curr.right === undefined) {
+          curr.right = node;
+          return;
+        }
+
+        curr = curr.right;
+      }
+    }
+  };
+
+  const prettyPrint = (node = root, prefix = "", isLeft = true) => {
+    if (node === null && node !== undefined) {
+      return;
+    }
+    if (node.right !== null && node.right !== undefined) {
       prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
     }
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.getData()}`);
-    if (node.left !== null) {
+    if (node.left !== null && node.left !== undefined) {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
@@ -36,7 +65,7 @@ const Tree = (array) => {
     return node;
   }
 
-  return { prettyPrint };
+  return { prettyPrint, insert };
 };
 
 export default Tree;
