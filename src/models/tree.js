@@ -128,6 +128,30 @@ const Tree = (array) => {
     return null;
   };
 
+  const levelOrderInterative = (fn) => {
+    if (root === null) return;
+
+    const q = [root];
+    const elements = [root];
+
+    while (q.length > 0) {
+      const frontNode = q.shift();
+
+      if (frontNode.left !== undefined && frontNode.left !== null) {
+        q.push(frontNode.left);
+        elements.push(frontNode.left);
+      }
+      if (frontNode.right !== undefined && frontNode.right !== null) {
+        q.push(frontNode.right);
+        elements.push(frontNode.right);
+      }
+
+      if (fn !== undefined) fn(frontNode);
+    }
+
+    if (fn === undefined) return elements;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -147,7 +171,7 @@ const Tree = (array) => {
     return node;
   }
 
-  return { prettyPrint, insert, deleteNode, find };
+  return { prettyPrint, insert, deleteNode, find, levelOrderInterative };
 };
 
 export default Tree;
