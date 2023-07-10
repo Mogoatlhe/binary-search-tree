@@ -113,6 +113,21 @@ const Tree = (array) => {
     }
   };
 
+  const find = (value) => {
+    if (root === null) return root;
+
+    let curr = root;
+
+    while (curr !== null && curr !== undefined) {
+      if (curr.getData() === value) return curr;
+
+      if (curr.getData() > value) curr = curr.left;
+      else if (curr.getData() < value) curr = curr.right;
+    }
+
+    return null;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -132,7 +147,7 @@ const Tree = (array) => {
     return node;
   }
 
-  return { prettyPrint, insert, deleteNode };
+  return { prettyPrint, insert, deleteNode, find };
 };
 
 export default Tree;
