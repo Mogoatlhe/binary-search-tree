@@ -152,6 +152,14 @@ const Tree = (array) => {
     if (fn === undefined) return elements;
   };
 
+  const levelOrderRecursive = (fn) => {
+    const q = [root];
+    const arr = [];
+    _doLevelOrder(q, arr, fn);
+
+    if (fn === undefined) return arr;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -165,13 +173,37 @@ const Tree = (array) => {
     }
   };
 
+  const _doLevelOrder = (q, arr, fn) => {
+    if (q.length < 1) return;
+    if (q[0] === undefined || q[0] === null) {
+      q.shift();
+      _doLevelOrder(q, arr, fn);
+      return;
+    }
+
+    const node = q.shift();
+    q.push(node.left);
+    q.push(node.right);
+
+    if (fn !== undefined) fn(node);
+    arr.push(node);
+    _doLevelOrder(q, arr, fn);
+  };
+
   function _getNewNode(value) {
     const node = Node();
     node.setData(value);
     return node;
   }
 
-  return { prettyPrint, insert, deleteNode, find, levelOrderInterative };
+  return {
+    prettyPrint,
+    insert,
+    deleteNode,
+    find,
+    levelOrderInterative,
+    levelOrderRecursive,
+  };
 };
 
 export default Tree;
