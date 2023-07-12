@@ -168,6 +168,14 @@ const Tree = (array) => {
     if (fn === undefined) return arr;
   };
 
+  const preorder = (fn) => {
+    const arr = [];
+
+    _doPreorder(fn, root, arr);
+
+    if (fn === undefined) return arr;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -207,6 +215,15 @@ const Tree = (array) => {
     _doInorder(fn, node.right, arr);
   };
 
+  const _doPreorder = (fn, node, arr) => {
+    if (node === null || node === undefined) return;
+
+    if (fn !== undefined) fn(node);
+    arr.push(node);
+    _doPreorder(fn, node.left, arr);
+    _doPreorder(fn, node.right, arr);
+  };
+
   function _getNewNode(value) {
     const node = Node();
     node.setData(value);
@@ -221,6 +238,7 @@ const Tree = (array) => {
     levelOrderInterative,
     levelOrderRecursive,
     inorder,
+    preorder,
   };
 };
 
