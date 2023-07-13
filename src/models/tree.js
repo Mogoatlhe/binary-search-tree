@@ -1,7 +1,7 @@
 import Node from "./node.js";
 
 const Tree = (array) => {
-  const arr = [...new Set(array)].sort((a, b) => {
+  let arr = [...new Set(array)].sort((a, b) => {
     if (a < b) return -1;
     return 1;
   });
@@ -232,6 +232,12 @@ const Tree = (array) => {
     return true;
   };
 
+  const rebalance = () => {
+    const inorderNodes = inorder();
+    arr = inorderNodes.map((node) => node.getData());
+    root = buildTree(0, arr.length - 1);
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -324,6 +330,7 @@ const Tree = (array) => {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 };
 
