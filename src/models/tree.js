@@ -202,6 +202,24 @@ const Tree = (array) => {
     return _calculateHeight(curr);
   };
 
+  const depth = (node) => {
+    if (node === null || node === undefined) return -1;
+
+    let data = node.getData();
+    let curr = root;
+    let height = 0;
+
+    while (curr !== null && curr !== undefined) {
+      if (data === curr.getData()) return height;
+
+      height += 1;
+      if (data > curr.getData()) curr = curr.right;
+      else if (data < curr.getData()) curr = curr.left;
+    }
+
+    return -1;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -292,6 +310,7 @@ const Tree = (array) => {
     preorder,
     postorder,
     height,
+    depth,
   };
 };
 
