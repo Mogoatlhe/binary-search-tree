@@ -184,6 +184,24 @@ const Tree = (array) => {
     if (fn === undefined) return arr;
   };
 
+  const height = (node) => {
+    if (node === null || node === undefined) return -1;
+
+    let data = node.getData();
+    let curr = root;
+
+    while (curr !== null && curr !== undefined) {
+      if (data === curr.getData()) break;
+
+      if (data > curr.getData()) curr = curr.right;
+      else if (data < curr.getData()) curr = curr.left;
+    }
+
+    if (curr === null || curr === undefined) return -1;
+
+    return _calculateHeight(curr);
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -241,6 +259,22 @@ const Tree = (array) => {
     arr.push(node);
   };
 
+  const _calculateHeight = (node) => {
+    if (node === null || node === undefined) return 0;
+
+    if (
+      (node.left === null || node.left === undefined) &&
+      (node.right === null || node.right === undefined)
+    )
+      return 0;
+
+    const leftSub = _calculateHeight(node.left) + 1;
+    const rightSub = _calculateHeight(node.right) + 1;
+
+    if (leftSub > rightSub) return leftSub;
+    return rightSub;
+  };
+
   function _getNewNode(value) {
     const node = Node();
     node.setData(value);
@@ -257,6 +291,7 @@ const Tree = (array) => {
     inorder,
     preorder,
     postorder,
+    height,
   };
 };
 
