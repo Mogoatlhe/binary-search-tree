@@ -220,6 +220,18 @@ const Tree = (array) => {
     return -1;
   };
 
+  const isBalanced = () => {
+    if (root === null || root === undefined) return true;
+
+    const rootLeftChildHeight = height(root.left);
+    const rootRightChildHeight = height(root.right);
+    const diff = rootLeftChildHeight - rootRightChildHeight;
+    const positiveDiff = diff < 0 ? diff * -1 : diff;
+
+    if (positiveDiff > 1) return false;
+    return true;
+  };
+
   const prettyPrint = (node = root, prefix = "", isLeft = true) => {
     if (node === null && node !== undefined) {
       return;
@@ -311,6 +323,7 @@ const Tree = (array) => {
     postorder,
     height,
     depth,
+    isBalanced,
   };
 };
 
